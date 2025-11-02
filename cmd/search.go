@@ -62,7 +62,11 @@ var searchCmd = &cobra.Command{
 			}
 
 			result := results.Results[fetchIndex]
-			page, err := client.GetPageByID(result.Content.ID)
+			if Debug {
+				fmt.Fprintf(os.Stderr, "[DEBUG] Selected result: Title=%s, ID=%s, Type=%s\n",
+					result.Title, result.ID, result.Type)
+			}
+			page, err := client.GetPageByID(result.ID)
 			if err != nil {
 				return fmt.Errorf("fetching page: %w", err)
 			}
@@ -89,11 +93,11 @@ var searchCmd = &cobra.Command{
 		fmt.Printf("Found %d results:\n\n", results.Size)
 
 		for i, result := range results.Results {
-			pageURL := cfg.ConfluenceURL + result.Content.Links.WebUI
+			pageURL := cfg.ConfluenceURL + result.Links.WebUI
 
-			fmt.Printf("[%d] %s\n", i+1, result.Content.Title)
+			fmt.Printf("[%d] %s\n", i+1, result.Title)
 			fmt.Printf("    Space: %s | Updated: %s\n",
-				result.Content.Space.Key,
+				result.Space.Key,
 				result.LastModified.Format("2006-01-02"))
 			fmt.Printf("    URL: %s\n\n", pageURL)
 		}

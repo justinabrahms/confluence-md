@@ -78,8 +78,14 @@ type SearchResult struct {
 }
 
 type SearchResultItem struct {
-	Content       Page      `json:"content"`
+	ID            string    `json:"id"`
+	Type          string    `json:"type"`
+	Status        string    `json:"status"`
 	Title         string    `json:"title"`
+	Space         Space     `json:"space"`
+	History       History   `json:"history"`
+	Version       Version   `json:"version"`
+	Links         Links     `json:"_links"`
 	Excerpt       string    `json:"excerpt"`
 	URL           string    `json:"url"`
 	LastModified  time.Time `json:"lastModified"`
@@ -176,7 +182,7 @@ func (c *Client) Search(query string, spaceKey string, limit int) (*SearchResult
 
 	params.Set("cql", cql)
 	params.Set("limit", fmt.Sprintf("%d", limit))
-	params.Set("expand", "content.space,content.version,content.history")
+	params.Set("expand", "space,version,history,lastModified")
 
 	path := "/rest/api/content/search?" + params.Encode()
 
@@ -186,12 +192,25 @@ func (c *Client) Search(query string, spaceKey string, limit int) (*SearchResult
 	}
 	defer resp.Body.Close()
 
+	// Read response body for debugging
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("reading response body: %w", err)
+	}
+
+	if c.Debug {
+		c.debugf("Raw search response (first 500 chars): %s", string(body[:min(500, len(body))]))
+	}
+
 	var result SearchResult
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err := json.Unmarshal(body, &result); err != nil {
 		return nil, fmt.Errorf("decoding search results: %w", err)
 	}
 
 	c.debugf("Search returned %d results", result.Size)
+	if c.Debug && len(result.Results) > 0 {
+		c.debugf("First result: Title=%s, ID=%s", result.Results[0].Title, result.Results[0].ID)
+	}
 	return &result, nil
 }
 

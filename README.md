@@ -162,6 +162,21 @@ Numbered list with page title, space, last updated date, and full URL for easy r
 - Links preserved and converted to Markdown format
 - Code blocks, tables, and formatting maintained
 
+## Development
+
+### Building from source
+
+```bash
+go build -o confluence-md
+```
+
+### Running tests
+
+```bash
+# Run e2e tests (requires configured credentials)
+./test/e2e_test.sh
+```
+
 ## Exit Codes
 
 - `0`: Success
