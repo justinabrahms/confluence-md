@@ -184,7 +184,7 @@ func (c *Client) Search(query string, spaceKey string, limit int, mine bool, use
 	}
 
 	if mine {
-		cqlParts = append(cqlParts, fmt.Sprintf("creator=\"%s\"", userEmail))
+		cqlParts = append(cqlParts, "creator=currentUser()")
 	}
 
 	cql := strings.Join(cqlParts, " AND ")
