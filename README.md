@@ -127,6 +127,7 @@ confluence-md search "onboarding" | grep "^\[2\]" | confluence-md fetch
 - `--output, -o`: Write output to a file instead of stdout
 - `--space`: Limit search to a specific Confluence space
 - `--limit`: Maximum number of search results to return (default: 10)
+- `--mine`: Only search pages you created
 - `--include-metadata`: Include page metadata (author, dates, labels) in output
 - `--lucky`: Automatically fetch content from the first search result
 - `--index`: Which search result to fetch (1-based index)
@@ -145,6 +146,9 @@ confluence-md search "architecture decision" --lucky --include-metadata
 
 # Fetch the third search result
 confluence-md search "API guidelines" --index 3
+
+# Search only your own pages
+confluence-md search "proposal" --mine
 
 # Pipe to other tools
 confluence-md search "sprint planning" --lucky | grep TODO

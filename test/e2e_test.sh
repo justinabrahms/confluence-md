@@ -92,8 +92,19 @@ else
 fi
 echo
 
-# Test 7: Search with no results
-echo "Test 7: Search with no results handles gracefully"
+# Test 7: Search with --mine filter
+echo "Test 7: Search with --mine filter"
+OUTPUT=$($TOOL search "proposal" --mine --limit 3 2>&1 || true)
+if echo "$OUTPUT" | grep -q "Found.*results\|No results found"; then
+    test_passed "--mine filter worked (query executed successfully)"
+else
+    test_failed "--mine filter did not work"
+    echo "$OUTPUT"
+fi
+echo
+
+# Test 8: Search with no results
+echo "Test 8: Search with no results handles gracefully"
 OUTPUT=$($TOOL search "zzznonexistentqueryzzzz" 2>&1 || true)
 if echo "$OUTPUT" | grep -q "No results found"; then
     test_passed "No results handled correctly"
@@ -102,8 +113,8 @@ else
 fi
 echo
 
-# Test 8: --debug flag provides debug output
-echo "Test 8: --debug flag shows debug information"
+# Test 9: --debug flag provides debug output
+echo "Test 9: --debug flag shows debug information"
 OUTPUT=$($TOOL search "proposal" --limit 1 --debug 2>&1)
 if echo "$OUTPUT" | grep -q "\[DEBUG\]"; then
     test_passed "--debug flag working"
@@ -112,8 +123,8 @@ else
 fi
 echo
 
-# Test 9: --include-metadata includes page metadata
-echo "Test 9: --include-metadata includes page info"
+# Test 10: --include-metadata includes page metadata
+echo "Test 10: --include-metadata includes page info"
 OUTPUT=$($TOOL search "proposal" --lucky --include-metadata 2>&1)
 if echo "$OUTPUT" | grep -q "Page ID:"; then
     test_passed "--include-metadata working"

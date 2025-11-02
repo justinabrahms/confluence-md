@@ -168,16 +168,26 @@ func (c *Client) GetPageByURL(pageURL string) (*Page, error) {
 	return c.GetPageByID(pageID)
 }
 
-func (c *Client) Search(query string, spaceKey string, limit int) (*SearchResult, error) {
+func (c *Client) Search(query string, spaceKey string, limit int, mine bool, userEmail string) (*SearchResult, error) {
 	params := url.Values{}
 
-	cql := query
-	if spaceKey != "" {
-		cql = fmt.Sprintf("type=page AND space=%s AND text~\"%s\"", spaceKey, query)
-	} else {
-		cql = fmt.Sprintf("type=page AND text~\"%s\"", query)
+	// Build CQL query
+	var cqlParts []string
+	cqlParts = append(cqlParts, "type=page")
+
+	if query != "" {
+		cqlParts = append(cqlParts, fmt.Sprintf("text~\"%s\"", query))
 	}
 
+	if spaceKey != "" {
+		cqlParts = append(cqlParts, fmt.Sprintf("space=%s", spaceKey))
+	}
+
+	if mine {
+		cqlParts = append(cqlParts, fmt.Sprintf("creator=\"%s\"", userEmail))
+	}
+
+	cql := strings.Join(cqlParts, " AND ")
 	c.debugf("Search CQL: %s", cql)
 
 	params.Set("cql", cql)

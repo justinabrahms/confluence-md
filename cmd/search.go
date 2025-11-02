@@ -11,10 +11,11 @@ import (
 )
 
 var (
-	spaceKey   string
-	limit      int
-	lucky      bool
+	spaceKey    string
+	limit       int
+	lucky       bool
 	resultIndex int
+	mine        bool
 )
 
 var searchCmd = &cobra.Command{
@@ -36,11 +37,11 @@ var searchCmd = &cobra.Command{
 
 		if Debug {
 			fmt.Fprintf(os.Stderr, "[DEBUG] Config: URL=%s, Email=%s\n", cfg.ConfluenceURL, cfg.Email)
-			fmt.Fprintf(os.Stderr, "[DEBUG] Query: %s, Space: %s, Limit: %d\n", query, spaceKey, limit)
+			fmt.Fprintf(os.Stderr, "[DEBUG] Query: %s, Space: %s, Limit: %d, Mine: %v\n", query, spaceKey, limit, mine)
 		}
 
 		// Search
-		results, err := client.Search(query, spaceKey, limit)
+		results, err := client.Search(query, spaceKey, limit, mine, cfg.Email)
 		if err != nil {
 			return fmt.Errorf("searching: %w", err)
 		}
@@ -112,6 +113,7 @@ func init() {
 	searchCmd.Flags().IntVar(&limit, "limit", 10, "Maximum number of results (1-50)")
 	searchCmd.Flags().BoolVar(&lucky, "lucky", false, "Fetch the first search result")
 	searchCmd.Flags().IntVar(&resultIndex, "index", 0, "Fetch a specific search result by index (1-based)")
+	searchCmd.Flags().BoolVar(&mine, "mine", false, "Only search pages you created")
 	searchCmd.Flags().StringVarP(&outputFile, "output", "o", "", "Write output to file instead of stdout")
 	searchCmd.Flags().BoolVar(&includeMetadata, "include-metadata", false, "Include page metadata in output")
 }
