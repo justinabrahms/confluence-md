@@ -11,23 +11,31 @@ A command-line tool for retrieving Confluence pages as Markdown, designed for bo
 
 ## Installation
 
-Download the latest binary release for your platform from the [releases page](https://github.com/yourusername/confluence-md/releases):
+Download the latest binary release for your platform from the [releases page](https://github.com/justinabrahms/confluence-md/releases):
 
 ```bash
 # macOS (Apple Silicon)
-curl -L https://github.com/yourusername/confluence-md/releases/latest/download/confluence-md-darwin-arm64 -o confluence-md
+curl -L https://github.com/justinabrahms/confluence-md/releases/latest/download/confluence-md-darwin-arm64 -o confluence-md
 chmod +x confluence-md
 sudo mv confluence-md /usr/local/bin/
 
 # macOS (Intel)
-curl -L https://github.com/yourusername/confluence-md/releases/latest/download/confluence-md-darwin-amd64 -o confluence-md
+curl -L https://github.com/justinabrahms/confluence-md/releases/latest/download/confluence-md-darwin-amd64 -o confluence-md
 chmod +x confluence-md
 sudo mv confluence-md /usr/local/bin/
 
-# Linux
-curl -L https://github.com/yourusername/confluence-md/releases/latest/download/confluence-md-linux-amd64 -o confluence-md
+# Linux (amd64)
+curl -L https://github.com/justinabrahms/confluence-md/releases/latest/download/confluence-md-linux-amd64 -o confluence-md
 chmod +x confluence-md
 sudo mv confluence-md /usr/local/bin/
+
+# Linux (arm64)
+curl -L https://github.com/justinabrahms/confluence-md/releases/latest/download/confluence-md-linux-arm64 -o confluence-md
+chmod +x confluence-md
+sudo mv confluence-md /usr/local/bin/
+
+# Windows (PowerShell)
+# Download from: https://github.com/justinabrahms/confluence-md/releases/latest/download/confluence-md-windows-amd64.exe
 ```
 
 ## Configuration
@@ -174,12 +182,31 @@ Numbered list with page title, space, last updated date, and full URL for easy r
 go build -o confluence-md
 ```
 
+### Building with version
+
+```bash
+VERSION=v1.0.0
+go build -ldflags "-X github.com/justinabrahms/confluence-md/cmd.Version=${VERSION}" -o confluence-md
+```
+
 ### Running tests
 
 ```bash
 # Run e2e tests (requires configured credentials)
 ./test/e2e_test.sh
 ```
+
+### Creating a release
+
+1. Create and push a git tag:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. Create a GitHub release from the tag at: https://github.com/justinabrahms/confluence-md/releases/new
+
+3. GitHub Actions will automatically build binaries for all platforms and attach them to the release
 
 ## Exit Codes
 

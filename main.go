@@ -1,6 +1,6 @@
 package main
 
-import "github.com/yourusername/confluence-md/cmd"
+import "github.com/justinabrahms/confluence-md/cmd"
 
 func main() {
 	cmd.Execute()

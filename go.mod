@@ -1,4 +1,4 @@
-module github.com/yourusername/confluence-md
+module github.com/justinabrahms/confluence-md
 
 go 1.24.1
 

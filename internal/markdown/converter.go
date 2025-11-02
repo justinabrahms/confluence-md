@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/yourusername/confluence-md/internal/confluence"
+	"github.com/justinabrahms/confluence-md/internal/confluence"
 	"github.com/JohannesKaufmann/html-to-markdown"
 )
 

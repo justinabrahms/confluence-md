@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/yourusername/confluence-md/internal/confluence"
-	"github.com/yourusername/confluence-md/internal/config"
-	"github.com/yourusername/confluence-md/internal/markdown"
+	"github.com/justinabrahms/confluence-md/internal/confluence"
+	"github.com/justinabrahms/confluence-md/internal/config"
+	"github.com/justinabrahms/confluence-md/internal/markdown"
 )
 
 var (

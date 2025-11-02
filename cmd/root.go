@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	Debug bool
+	Debug   bool
+	Version string = "dev" // Set via ldflags during build
 )
 
 var rootCmd = &cobra.Command{
@@ -17,6 +18,7 @@ var rootCmd = &cobra.Command{
 	Long: `A command-line tool for retrieving Confluence pages as Markdown.
 
 Fetch pages by URL or search for pages by name and retrieve their content.`,
+	Version: Version,
 }
 
 func init() {
