@@ -1,3 +1,8 @@
+---
+name: confluence-document-reader
+description: Read and search Confluence pages as markdown using the confluence-md CLI tool
+---
+
 # Confluence Document Reader
 
 Read and search Confluence pages as markdown using the confluence-md CLI tool.
@@ -5,6 +10,7 @@ Read and search Confluence pages as markdown using the confluence-md CLI tool.
 ## What this skill does
 
 This skill allows Claude to:
+
 - Search for Confluence pages by query
 - Fetch specific Confluence pages by URL
 - Filter searches by space or creator
@@ -13,6 +19,7 @@ This skill allows Claude to:
 ## When to use this skill
 
 Use this skill when the user asks to:
+
 - Read a Confluence page
 - Search for Confluence documentation
 - Find pages about a specific topic
@@ -30,6 +37,7 @@ confluence-md search "query" [flags]
 ```
 
 Common flags:
+
 - `--lucky` - Fetch the first result immediately
 - `--mine` - Only search pages you created
 - `--space SPACE` - Limit search to specific space
@@ -60,12 +68,14 @@ confluence-md fetch https://company.atlassian.net/wiki/spaces/ENG/pages/123456/P
 
 ## Output
 
-All commands return markdown-formatted content that can be directly analyzed and discussed.
+All commands return markdown-formatted content that can be directly analyzed and
+discussed.
 
 ## Requirements
 
 - The `confluence-md` binary must be in your PATH
-- Configuration must be set up in `~/.config/confluence-md/config.yaml` or via environment variables
+- Configuration must be set up in `~/.config/confluence-md/config.yaml` or via
+  environment variables
 - Valid Confluence credentials (email and API token)
 
 ## Tips

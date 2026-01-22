@@ -1,17 +1,20 @@
 # Confluence Markdown Fetcher
 
-A command-line tool for retrieving Confluence pages as Markdown, designed for both human readers and LLM consumption.
+A command-line tool for retrieving Confluence pages as Markdown, designed for
+both human readers and LLM consumption.
 
 ## Features
 
 - **Fetch by URL**: Download a Confluence page directly using its URL
 - **Search and fetch**: Find pages by name/query and retrieve their content
 - **Markdown output**: Pages are converted to clean, readable Markdown
-- **Machine-readable format**: Output structured for easy parsing by LLMs and automation tools
+- **Machine-readable format** : Output structured for easy parsing by LLMs and
+  automation tools
 
 ## Installation
 
-Download the latest binary release for your platform from the [releases page](https://github.com/justinabrahms/confluence-md/releases):
+Download the latest binary release for your platform from the
+[releases page](https://github.com/justinabrahms/confluence-md/releases) :
 
 ```bash
 # macOS (Apple Silicon)
@@ -40,7 +43,8 @@ sudo mv confluence-md /usr/local/bin/
 
 ## Configuration
 
-Configure your Confluence credentials using either a config file or environment variables.
+Configure your Confluence credentials using either a config file or environment
+variables.
 
 ### Config File (Recommended)
 
@@ -53,6 +57,7 @@ api_token: your-api-token
 ```
 
 You can also set `XDG_CONFIG_HOME` to use a different config directory:
+
 ```bash
 export XDG_CONFIG_HOME=/custom/path
 # Config file will be at /custom/path/confluence-md/config.yaml
@@ -70,7 +75,7 @@ export CONFLUENCE_API_TOKEN="your-api-token"
 
 ### Getting an API Token
 
-1. Go to https://id.atlassian.com/manage-profile/security/api-tokens
+1. Go to <https://id.atlassian.com/manage-profile/security/api-tokens>
 2. Click "Create API token"
 3. Give it a label and copy the token
 4. Add it to your config file or environment
@@ -93,7 +98,8 @@ confluence-md search "project documentation"
 ```
 
 Example output:
-```
+
+```text
 Found 5 results:
 
 [1] Project Documentation Overview
@@ -165,9 +171,12 @@ confluence-md search "sprint planning" --lucky | grep TODO
 ## Output Format
 
 ### Search results
-Numbered list with page title, space, last updated date, and full URL for easy reference.
+
+Numbered list with page title, space, last updated date, and full URL for easy
+reference.
 
 ### Markdown content
+
 - Page title as H1
 - Optional metadata block (when `--include-metadata` is used)
 - Page content converted to Markdown
@@ -199,14 +208,16 @@ go build -ldflags "-X github.com/justinabrahms/confluence-md/cmd.Version=${VERSI
 ### Creating a release
 
 1. Create and push a git tag:
+
    ```bash
    git tag v1.0.0
    git push origin v1.0.0
    ```
 
-2. Create a GitHub release from the tag at: https://github.com/justinabrahms/confluence-md/releases/new
+2. Create a GitHub release from the tag at: <https://github.com/justinabrahms/confluence-md/releases/new>
 
-3. GitHub Actions will automatically build binaries for all platforms and attach them to the release
+3. GitHub Actions will automatically build binaries for all platforms and attach
+   them to the release
 
 ## Exit Codes
 
@@ -215,3 +226,20 @@ go build -ldflags "-X github.com/justinabrahms/confluence-md/cmd.Version=${VERSI
 - `2`: Authentication failure
 - `3`: Page not found
 - `4`: No search results found
+
+## Claude Code Integration
+
+This repository includes a Claude Code skill ( `CLAUDE_SKILL.md` ) that teaches
+Claude how to use this tool. To install it:
+
+1. Copy the skill to your Claude Code configuration:
+
+   ```bash
+   mkdir -p ~/.claude/skills/confluence
+   cp CLAUDE_SKILL.md ~/.claude/skills/confluence/SKILL.md
+   ```
+
+2. Restart Claude Code to pick up the new skill.
+
+Once installed, Claude will automatically know how to search and fetch
+Confluence pages when you ask it to read Confluence documentation.
